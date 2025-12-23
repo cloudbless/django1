@@ -1,0 +1,138 @@
+{% extends "base.html" %} {% load static %} {% block title %}{{ productName }}
+{%endblock %} {% block content %}
+<link href="{% static 'css/products.css' %}" rel="stylesheet" />
+
+<!-- 广告横幅 -->
+<div class="container-fluid">
+  <div class="row">
+    <img
+      class="img-responsive model-img"
+      src="{% static 'img/products.jpg' %}"
+      alt="产品横幅图"
+    />
+  </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+  <div class="row row-3">
+    <!-- 侧边导航栏 -->
+    <div class="col-md-3">
+      <div class="model-title">算法平台</div>
+      <div class="model-list">
+        <ul class="list-group">
+          <li
+            class="list-group-item {% if sub_menu == 'robot' %}active{% endif %}"
+            id="robot"
+          >
+            <a href="{% url 'productsApp:products' 'robot' %}">牛客</a>
+          </li>
+          <li
+            class="list-group-item {% if sub_menu == 'monitor' %}active{% endif %}"
+            id="monitor"
+          >
+            <a href="{% url 'productsApp:products' 'monitor' %}">学校OJ</a>
+          </li>
+          <li
+            class="list-group-item {% if sub_menu == 'face' %}active{% endif %}"
+            id="face"
+          >
+            <a href="{% url 'productsApp:products' 'face' %}">VJudge</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 产品列表区域 -->
+    <div class="col-md-9">
+      <div class="model-details-title">{{ productName }}</div>
+
+      <!-- 产品列表 -->
+      <div class="model-details">
+        {% if productList %} {% for product in productList %}
+        <div
+          class="row product-item"
+          style="
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+          "
+        >
+          <div class="col-md-6">
+            {% for img in product.productImgs.all %} {% if forloop.first %}
+            <a href="#" class="thumbnail row-4">
+              <img
+                class="img-responsive model-img"
+                src="{{ img.photo.url }}"
+                alt="{{ product.title }}"
+              />
+            </a>
+            {% endif %} {% empty %}
+            <div class="thumbnail row-4 no-image">
+              <img
+                class="img-responsive model-img"
+                src="{% static 'img/default-product.jpg' %}"
+                alt="默认图片"
+              />
+            </div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <h3>{{ product.title|truncatechars:"20" }}</h3>
+            <p>{{ product.description|truncatechars:"150"|linebreaks }}</p>
+            <div
+              class="thumbnail row-5"
+              style="border: none; background: none; box-shadow: none"
+            >
+              <div class="caption" style="padding: 0">
+                <a
+                  href="{% url 'productsApp:productDetail' product.id %}"
+                  class="btn btn-primary"
+                  role="button"
+                  >查看详情</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- 分页导航 -->
+        {% if pageData %}
+        <div class="paging text-center">
+          <ul id="pages" class="pagination pagination-sm">
+            {% if pageData.first %}
+            <li><a href="?page=1">1</a></li>
+            {% endif %} {% if pageData.left %} {% if pageData.left_has_more %}
+            <li><span>...</span></li>
+            {% endif %} {% for i in pageData.left %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %} {% endif %}
+
+            <li class="active">
+              <a href="?page={{ pageData.page }}">{{ pageData.page }}</a>
+            </li>
+
+            {% if pageData.right %} {% for i in pageData.right %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %} {% if pageData.right_has_more %}
+            <li><span>...</span></li>
+            {% endif %} {% endif %} {% if pageData.last %}
+            <li>
+              <a href="?page={{ pageData.total_pages }}"
+                >{{ pageData.total_pages }}</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %} {% else %}
+        <div class="alert alert-info text-center">
+          <p>暂无{{ productName }}相关产品</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

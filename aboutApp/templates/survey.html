@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block title %}
+算法竞赛
+{% endblock %}
+ 
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/about.jpg' %}">
+    </div>
+</div>
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                算法竞赛
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="survey">
+                        <a href="{% url 'aboutApp:survey' %}">竞赛简介</a>
+                    </li>
+                    <li class="list-group-item" id="honor">
+                        <a href="{% url 'aboutApp:honor' %}">荣誉介绍</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                ACM-ICPC 国际大学生程序设计竞赛
+            </div>
+            <div class="model-details">
+                <img class="img-responsive" src="{% static 'img/acm-icpc.jpg' %}" alt="ACM-ICPC竞赛">
+                <h3>竞赛简介</h3>
+                <p>
+                    ACM-ICPC（国际大学生程序设计竞赛）是由美国计算机协会（ACM）主办的年度竞赛，旨在展示大学生创新能力、团队精神和在压力下编写程序、分析和解决问题的能力。
+                </p>
+                <h3>竞赛特点</h3>
+                <ul>
+                    <li><strong>团队合作：</strong>每支队伍由3名在校大学生组成</li>
+                    <li><strong>算法挑战：</strong>考察数据结构、算法设计、数学建模等能力</li>
+                    <li><strong>实时评判：</strong>在线评测系统即时反馈结果</li>
+                    <li><strong>全球性赛事：</strong>来自全球100多个国家的数千所大学参与</li>
+                </ul>
+                <h3>竞赛流程</h3>
+                <p>
+                    • 校内选拔赛 → 区域预选赛 → 全球总决赛<br>
+                    • 比赛时长通常为5小时，解决8-13道编程题目<br>
+                    • 题目涉及数学、计算几何、图论、动态规划等多个领域
+                </p>
+                <h3>其他相关竞赛</h3>
+                <p>
+                    • CCPC（中国大学生程序设计竞赛）<br>
+                    • 蓝桥杯全国软件和信息技术专业人才大赛<br>
+                    • 百度之星程序设计大赛<br>
+                    • Google Code Jam
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
